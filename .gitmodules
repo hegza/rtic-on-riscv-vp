@@ -1,6 +1,9 @@
 [submodule "submodules/renode"]
 	path = submodules/renode
 	url = https://github.com/renode/renode
+[submodule "submodules/riscv-slic"]
+	path = submodules/riscv-slic
+	url = https://github.com/onsdagens/riscv-slic
 [submodule "submodules/rtic"]
 	path = submodules/rtic
 	url = https://github.com/onsdagens/rtic/
