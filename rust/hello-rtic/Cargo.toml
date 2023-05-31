@@ -13,7 +13,7 @@ common = { path = "../common" }
 rtic = { path = "../../submodules/rtic/rtic", features = [
     "riscv-e310x-backend",
 ] }
-riscv-slic = { git = "https://github.com/romancardenas/riscv-slic", branch = "dev-plic", features = [
+riscv-slic = { path = "../../submodules/riscv-slic/riscv-slic", features = [
     "swi-clint",
     "exti-plic",
 ] }
