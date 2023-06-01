@@ -1,0 +1,34 @@
+ram: Memory.MappedMemory @ {
+        sysbus 0x40000000;
+        sysbus 0xc0000000 // shadow
+    }
+    // 256 MeB
+    size: 0x10000000
+
+cpu: CPU.RiscV32 @ sysbus
+    cpuType: "rv32imac"
+    timeProvider: clint
+    privilegeArchitecture: PrivilegeArchitecture.Priv1_10
+
+clint: IRQControllers.CoreLevelInterruptor  @ sysbus 0x02000000
+    // Connect IPI (0) to msip (3)
+    // Connect timer (1) to mtip (7)
+    [0,1] -> cpu@[3,7]
+    // This matches with default core frequency
+    frequency: 100000000
+    // Number of HARTs
+    numberOfTargets: 1
+
+// Modelled after Freedom E310 PLIC, and matches with renode/riscv_virt
+plic: IRQControllers.PlatformLevelInterruptController @ sysbus 0x0c000000
+    0 -> cpu@11
+    numberOfSources: 52
+    numberOfContexts: 1
+    prioritiesEnabled : true
+
+uart: UART.NS16550 @ {
+        sysbus 0x60001800;
+        sysbus 0x10000000;
+        sysbus 0xE0001800 // shadow
+    }
+    IRQ -> plic@3
